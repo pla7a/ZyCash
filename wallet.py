@@ -1,3 +1,6 @@
+from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
+rpc_cn = AuthServiceProxy("http://jp:plaza@127.0.0.1:9050")
+
 """
 ZCash wallet using RPC
 ----------------------
@@ -58,7 +61,12 @@ def error_input():
 add_type = "t" | "z" :: String
 """
 def gen_address(add_type="z"):
-    print("gen_address")
+    if (add_type == "z"):
+        add = rpc_cn.z_getnewaddress("sapling")
+        print("New z-address: %s" %(add))
+    else:
+        add = rpc_cn.generateaddress()
+        print("New t-address: %s" %(add))
 
 def gen_address_first():
     add_type = input("Address type (t or z): ")
@@ -73,7 +81,13 @@ def gen_address_first():
 add_type :: Maybe AddressType
 """
 def list_addresses(add_type=None):
-    print("list_addresses")
+    print("Addresses:")
+    if (not add_type):
+        add_z = rpc_cn.z_listaddresses()
+        add_t = rpc_cn.listreceivedbyaddress(1,True)
+        add_t = [addr[k]["address"] for k in range(len(add_t))]
+        for address in (add_z+add_t):
+            print(address)
 
 def list_addresses_first():
     add_type = input("Address type (t or z): ")
