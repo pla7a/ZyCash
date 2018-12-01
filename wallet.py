@@ -61,6 +61,7 @@ def error_input():
 add_type = "t" | "z" :: String
 """
 def gen_address(add_type="z"):
+    print("----------------------------")
     if (add_type == "z"):
         add = rpc_cn.z_getnewaddress("sapling")
         print("New z-address: %s" %(add))
@@ -83,11 +84,26 @@ add_type :: Maybe AddressType
 def list_addresses(add_type=None):
     print("Addresses:")
     print("----------------------------")
+
+    # Print all addresses
     if (not add_type):
         add_z = rpc_cn.z_listaddresses()
         list_add_t = rpc_cn.listreceivedbyaddress(1,True)
         add_t = [list_add_t[k]["address"] for k in range(len(list_add_t))]
         for address in (add_z+add_t):
+            print(address)
+            print("----------------------------")
+    # Print t-addresses
+    elif (add_type == "t"):
+        list_add_t = rpc_cn.listreceivedbyaddress(1,True)
+        add_t = [list_add_t[k]["address"] for k in range(len(list_add_t))]
+        for address in (add_t):
+            print(address)
+            print("----------------------------")
+    # Print z-addresses
+    elif (add_type == "z"):
+        add_z = rpc_cn.z_listaddresses()
+        for address in (add_z):
             print(address)
             print("----------------------------")
 
@@ -129,10 +145,10 @@ def receive(new="yes"):
     if (new == "yes"):
         return gen_address("z")
     elif (new == "no"):
-        return list_addresses
+        return list_addresses()
 
 def receive_first():
-    new = input("Generate new address ('y' or 'n'): ")
+    new = input("Generate new address ['y'\'n']: ")
     if (new in ["y","n"]):
         receive(new)
     else:
