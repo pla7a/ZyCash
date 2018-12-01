@@ -65,7 +65,7 @@ def gen_address(add_type="z"):
         add = rpc_cn.z_getnewaddress("sapling")
         print("New z-address: %s" %(add))
     else:
-        add = rpc_cn.generateaddress()
+        add = rpc_cn.getnewaddress()
         print("New t-address: %s" %(add))
 
 def gen_address_first():
