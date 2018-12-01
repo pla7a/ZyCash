@@ -82,12 +82,14 @@ add_type :: Maybe AddressType
 """
 def list_addresses(add_type=None):
     print("Addresses:")
+    print("----------------------------")
     if (not add_type):
         add_z = rpc_cn.z_listaddresses()
-        add_t = rpc_cn.listreceivedbyaddress(1,True)
-        add_t = [addr[k]["address"] for k in range(len(add_t))]
+        list_add_t = rpc_cn.listreceivedbyaddress(1,True)
+        add_t = [list_add_t[k]["address"] for k in range(len(list_add_t))]
         for address in (add_z+add_t):
             print(address)
+            print("----------------------------")
 
 def list_addresses_first():
     add_type = input("Address type (t or z): ")
