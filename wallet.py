@@ -148,7 +148,7 @@ def receive(new="y"):
         return list_addresses()
 
 def receive_first():
-    new = input("Generate new address \['y'\'n'\]: ")
+    new = input("Generate new address ('y'\'n'): ")
     if (new in ["y","n"]):
         receive(new)
     else:
