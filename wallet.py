@@ -24,7 +24,7 @@ def main():
 # Print the menu of options
 def menu():
     print("ZyCash Wallet Menu")
-    print("----------------------------")
+    dash()
     print("[0] : Address generation")
     print("[1] : List addresses")
     print("[2] : Send ZCash")
@@ -61,7 +61,7 @@ def error_input():
 add_type = "t" | "z" :: String
 """
 def gen_address(add_type="z"):
-    print("----------------------------")
+    dash()
     if (add_type == "z"):
         add = rpc_cn.z_getnewaddress("sapling")
         print("New z-address: %s" %(add))
@@ -83,7 +83,7 @@ add_type :: Maybe AddressType
 """
 def list_addresses(add_type=None):
     print("Addresses:")
-    print("----------------------------")
+    dash()
 
     # Print all addresses
     if (not add_type):
@@ -92,20 +92,20 @@ def list_addresses(add_type=None):
         add_t = [list_add_t[k]["address"] for k in range(len(list_add_t))]
         for address in (add_z+add_t):
             print(address)
-            print("----------------------------")
+            dash()
     # Print t-addresses
     elif (add_type == "t"):
         list_add_t = rpc_cn.listreceivedbyaddress(1,True)
         add_t = [list_add_t[k]["address"] for k in range(len(list_add_t))]
         for address in (add_t):
             print(address)
-            print("----------------------------")
+            dash()
     # Print z-addresses
     elif (add_type == "z"):
         add_z = rpc_cn.z_listaddresses()
         for address in (add_z):
             print(address)
-            print("----------------------------")
+            dash()
 
 def list_addresses_first():
     add_type = input("Address type (t or z): ")
@@ -197,6 +197,8 @@ def is_valid(add):
     else:
         return True
 
+def dash():
+    print("----------------------------")
 
 # Run
 main()
