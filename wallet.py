@@ -91,7 +91,7 @@ def list_addresses(add_type=None):
 
 def list_addresses_first():
     add_type = input("Address type (t or z): ")
-    if (add_type in ["t","z"]):
+    if (add_type in ["t","z", ""]):
         list_addresses(add_type)
     else:
         error_input()
