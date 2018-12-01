@@ -141,14 +141,14 @@ def send_first():
 """
 new = "yes" | "no" :: String
 """
-def receive(new="yes"):
-    if (new == "yes"):
+def receive(new="y"):
+    if (new == "y"):
         return gen_address("z")
-    elif (new == "no"):
+    elif (new == "n"):
         return list_addresses()
 
 def receive_first():
-    new = input("Generate new address ['y'\'n']: ")
+    new = input("Generate new address \['y'\'n'\]: ")
     if (new in ["y","n"]):
         receive(new)
     else:
