@@ -5,12 +5,12 @@ rpc_cn = AuthServiceProxy("http://jp:plaza@127.0.0.1:9050")
 ZCash wallet using RPC
 ----------------------
 Features:
-[0] : Address generation (t and z)
-[1] : List addresses (t and z)
-[2] : Send zcash
-[3] : Receive zcash (t and z)
-[4] : Show transactions
-[5] : Show balance
+[0] : Address generation (t and z) : Y
+[1] : List addresses (t and z) : Y
+[2] : Send zcash : N
+[3] : Receive zcash (t and z) : Y
+[4] : Show transactions : N
+[5] : Show balance : N
 """
 
 # type Address = String
@@ -131,8 +131,13 @@ def send_first():
     add_to = input("Address to: ")
     change = input("Change address (return if default): ")
 
-    if (is_valid(add_from) and is_valid(add_to) and is_valid(change)):
-        send()
+    # Check if the addresses are valid
+    if (change == ""):
+        (is_valid(add_from) and is_valid(add_to):
+        send(add_from, add_to)
+    else:
+        if (is_valid(add_from) and is_valid(add_to) and is_valid(change)):
+        send(add_from, add_to, change)
     else:
         error_input()
 
@@ -190,12 +195,27 @@ def get_balance_first():
     else:
         error_input()
 
+
 # Check whether given address is valid
 def is_valid(add):
-    if (add == ""):
-        return True
+    # Check validity of t-address
+    if (add[0] == "t"):
+        add_validity = rpc_cn.validateaddress(add)
+        if (add_validity["isvalid"] == "true"):
+            return True
+        else:
+            return False
+
+    # Check validity of z-address
+    elif (add[0] == "z"):
+        add_validity = rpc_cn.z_validateaddress(add)
+        if (add_validity["isvalid"] == "true"):
+            return True
+        else:
+            return False
     else:
-        return True
+        return False
+
 
 def dash():
     print("----------------------------")
